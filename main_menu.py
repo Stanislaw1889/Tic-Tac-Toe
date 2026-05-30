@@ -22,3 +22,19 @@ przyciski = [
     {"rect": przycisk_multi, "tekst": "Gra wieloosobowa"},
     {"rect": przycisk_stats, "tekst": "Statystyki"}
 ]
+
+def main_menu():
+    while True:
+        pozycja_myszki = pygame.mouse.get_pos()
+        
+        for zdarzenie in pygame.event.get():
+            if zdarzenie.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+                
+            if zdarzenie.type == pygame.MOUSEBUTTONDOWN and zdarzenie.button == 1:
+                for p in przyciski:
+                    if p["rect"].collidepoint(pozycja_myszki):
+                        print(f"Kliknięto: {p['tekst']}")
+    
+        ekran.fill(ustawienia.CZERN_TLA)
