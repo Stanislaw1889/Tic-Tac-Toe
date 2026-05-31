@@ -38,3 +38,24 @@ def main_menu():
                         print(f"Kliknięto: {p['tekst']}")
     
         ekran.fill(ustawienia.CZERN_TLA)
+
+        tekst_nazwy = czcionka_nazwy_gry.render("TIC-TAC-TOE", True, ustawienia.BIEL)
+        X_nazwy = (ustawienia.OKNO_SZEROKOSC // 2) - (tekst_nazwy.get_width() // 2)
+        Y_nazwy = 120
+        
+        ekran.blit(tekst_nazwy, (X_nazwy, Y_nazwy))
+
+        for p in przyciski:
+            kolor_elementu = ustawienia.daj_kolor_przycisku(p["rect"], pozycja_myszki)
+            
+            pygame.draw.rect(ekran, kolor_elementu, p["rect"], ustawienia.GRUBOŚĆ_RAMKI)
+
+            napis = czcionka_przyciskow.render(p["tekst"], True, kolor_elementu)
+            X_tekstu = p["rect"].x + (p["rect"].width // 2) - (napis.get_width() // 2)
+            Y_tekstu = p["rect"].y + (p["rect"].height // 2) - (napis.get_height() // 2)
+            ekran.blit(napis, (X_tekstu, Y_tekstu))
+            
+        pygame.display.flip()
+
+if __name__ == "__main__":
+    main_menu()
