@@ -1,12 +1,10 @@
 import pygame
 import sys
-
-# Inicjalizacja Pygame (potrzebna do testów)
 pygame.init()
+
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Podmenu - Wybór Trybu")
 
-# --- KLASA PRZYCISKU (Wspólna dla projektu) ---
 class Button:
     def __init__(self, text, x, y, w, h, color):
         self.text = text
@@ -14,7 +12,6 @@ class Button:
         self.color = color
 
     def draw(self, surface):
-        # Rysowanie ramki przycisku (tak jak na Waszym screenie z AGH)
         pygame.draw.rect(surface, self.color, self.rect, 2)
         font = pygame.font.SysFont(None, 30)
         text_surf = font.render(self.text, True, (255, 255, 255))
@@ -25,49 +22,43 @@ class Button:
         return self.rect.collidepoint(pos)
 
 
-# --- TWOJE ZADANIE: FUNKCJA PODMENU ---
-# Parametr `is_singleplayer` decyduje, czy pokazujemy wybór trudności komputera
 def run_game_setup_menu(screen, is_singleplayer=True):
     clock = pygame.time.get_state() if hasattr(pygame, 'time') and hasattr(pygame.time, 'get_state') else pygame.time.Clock()
     
-    # Stan początkowy konfiguracji
     selected_size = 3
     selected_difficulty = "Łatwy"
-    
-    # Kolory z Waszego menu głównego
+
+
     GREEN = (50, 205, 50)
     ORANGE = (255, 165, 0)
     RED = (255, 69, 0)
     GRAY = (128, 128, 128)
     WHITE = (255, 255, 255)
 
-    # Inicjalizacja przycisków rozmiaru planszy
     btn_3x3 = Button("Plansza 3x3", 250, 160, 300, 45, GREEN)
     btn_4x4 = Button("Plansza 4x4", 250, 220, 300, 45, GREEN)
     btn_5x5 = Button("Plansza 5x5", 250, 280, 300, 45, GREEN)
     
-    # Przycisk trudności (tylko dla singla) oraz nawigacji
     btn_diff = Button(f"Poziom: {selected_difficulty}", 250, 360, 300, 45, ORANGE)
     btn_start = Button("URUCHOM GRĘ", 250, 440, 300, 50, RED)
     btn_back = Button("Powrót", 250, 510, 300, 45, GRAY)
+
+
 
     in_menu = True
     while in_menu:
         screen.fill((30, 30, 30)) # Ciemne tło menu
         mouse_pos = pygame.mouse.get_pos()
         
-        # Nagłówek dynamiczny w zależności od trybu
         font = pygame.font.SysFont(None, 40)
         title_text = "GRA Z KOMPUTEREM" if is_singleplayer else "GRA WIELOOSOBOWA"
         title_surf = font.render(title_text, True, WHITE)
         screen.blit(title_surf, (260, 80))
 
-        # --- Podświetlanie aktualnie wybranego rozmiaru planszy ---
         btn_3x3.color = GREEN if selected_size == 3 else RED
         btn_4x4.color = GREEN if selected_size == 4 else RED
         btn_5x5.color = GREEN if selected_size == 5 else RED
 
-        # Rysowanie Twoich przycisków
         btn_3x3.draw(screen)
         btn_4x4.draw(screen)
         btn_5x5.draw(screen)
@@ -76,7 +67,6 @@ def run_game_setup_menu(screen, is_singleplayer=True):
         btn_start.draw(screen)
         btn_back.draw(screen)
 
-        # Obsługa zdarzeń (kliknięcia)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -91,34 +81,30 @@ def run_game_setup_menu(screen, is_singleplayer=True):
                     selected_size = 5
                     
                 elif btn_diff.is_clicked(mouse_pos) and is_singleplayer:
-                    # Cykliczna zmiana poziomu trudności
                     if selected_difficulty == "Łatwy": selected_difficulty = "Średni"
                     elif selected_difficulty == "Średni": selected_difficulty = "Trudny"
                     else: selected_difficulty = "Łatwy"
                     btn_diff.text = f"Poziom: {selected_difficulty}"
                     
-                # Tutaj zwracasz zebrane dane do reszty programu gry
                 elif btn_start.is_clicked(mouse_pos):
                     print(f"Zatwierdzono: Tryb Singlemode={is_singleplayer}, Rozmiar={selected_size}x{selected_size}, Trudność={selected_difficulty}")
                     return {"size": selected_size, "difficulty": selected_difficulty, "action": "START"}
                     
-                    #Funckja powrotu
                 elif btn_back.is_clicked(mouse_pos):
                     return {"action": "BACK"}
 
         pygame.display.flip()
         clock.tick(60)
 
-# --- PĘTLA TESTOWA
+
 if __name__ == "__main__":
-    # Udajemy menu główne. Po kliknięciu "Gra z komputerem" program wywoła Twoją funkcję:
     print("Uruchamianie Twojego podmenu testowego...")
-    
-    # Test 1: Menu dla gry jednoosobowej (z komputerem)
+
+
     wynik_singla = run_game_setup_menu(screen, is_singleplayer=True)
     print("Podmenu jednoosobowe zwróciło do systemu głównego:", wynik_singla)
     
-    # Test 2: Menu dla gry wieloosobowej (bez poziomu trudności)
+    
     if wynik_singla["action"] == "START":
         print("Teraz testujemy wersję wieloosobową...")
         wynik_multi = run_game_setup_menu(screen, is_singleplayer=False)
