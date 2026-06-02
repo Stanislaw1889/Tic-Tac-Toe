@@ -2,6 +2,8 @@ import pygame
 import sys
 import os
 import ustawienia
+import menu_gry
+import skiny
 
 pygame.init()
 
@@ -36,6 +38,20 @@ def main_menu():
                 for p in przyciski:
                     if p["rect"].collidepoint(pozycja_myszki):
                         print(f"Kliknięto: {p['tekst']}")
+
+                        if p["tekst"] == "Gra z komputerem":
+                            wynik = menu_gry.run_game_setup_menu(ekran, is_singleplayer=True)
+                            if wynik["action"] == "START":
+                                print(f"Przekazuję do silnika gry tryb BOT. Dane: {wynik}")
+
+                        elif p["tekst"] == "Gra wieloosobowa":
+                            wynik = menu_gry.run_game_setup_menu(ekran, is_singleplayer=False)
+                            if wynik["action"] == "START":
+                                print(f"Przekazuję do silnika gry tryb MULTI. Dane: {wynik}")
+
+                        elif p["tekst"] == "Wybór skinów":
+                            wynik_skinow = skiny.run_skins_menu(ekran)
+                            print(f"Powrót do menu. Aktywny skin w systemie: {wynik_skinow['skin']}")
     
         ekran.fill(ustawienia.CZERN_TLA)
 
