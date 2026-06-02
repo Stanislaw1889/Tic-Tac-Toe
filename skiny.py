@@ -1,93 +1,81 @@
-import os
+import pygame
+import sys
+import ustawienia
 
-def czysc_ekran():
-    """Czyszczenie konsoli w zależności od systemu operacyjnego."""
-    os.system('cls' if os.name == 'nt' else 'clear')
+aktualny_skin = "Standard"
 
-def menu_wyboru_skinow():
-    # Kody ANSI dla kolorów (czarne tło, teksty w kolorach)
-    RESET = "\033[0m"
-    ZIELONY = "\033[1;32m"
-    CZERWONY = "\033[1;31m"
-    BIALY = "\033[1;37m"
-    CZARNY_BG = "\033[40m"  # Wymuszenie czarnego tła
-
-    # Słowniki z dostępnymi opcjami
-    symbole = {
-        "1": ("Krzyżyk", "X"),
-        "2": ("Kółko", "O"),
-        "3": ("Gwiazdka", "★"),
-        "4": ("Serduszko", "♥"),
-        "5": ("Kwiatek", "✿"),
-        "6": ("Błyskawica", "⚡"),
-        "7": ("Chmurka", "☁")
-    }
-
-    kolory = {
-        "1": ("Zielony", ZIELONY),
-        "2": ("Czerwony", CZERWONY),
-        "3": ("Biały", BIALY)
-    }
-
-    wybory_graczy = {}
-
-    for gracz in ["Gracz 1", "Gracz 2"]:
-        while True:
-            czysc_ekran()
-            # Nagłówek w kolorach gry
-            print(f"{CZARNY_BG}{CZERWONY}=== {ZIELONY}KÓŁKO I KRZYŻYK: WYBÓR SKINU {CZERWONY}==={RESET}")
-            print(f"{CZARNY_BG}{BIALY}Wybierasz skin dla: {ZIELONY}{gracz}{RESET}\n")
-            
-            # Wyświetlanie dostępnych symboli
-            print(f"{CZARNY_BG}{BIALY}Dostępne symbole:{RESET}")
-            for klucz, (nazwa, znak) in symbole.items():
-                print(f"{CZARNY_BG}{ZIELONY}{klucz}. {BIALY}{nazwa} ({znak}){RESET}")
-            
-            wybor_symbolu = input(f"\n{CZARNY_BG}{BIALY}Wybierz numer symbolu: {RESET}").strip()
-            
-            if wybor_symbolu not in symbole:
-                print(f"{CZARNY_BG}{CZERWONY}Nieprawidłowy wybór! Spróbuj ponownie.{RESET}")
-                input("Naciśnij Enter, aby kontynuować...")
-                continue
-
-            # Wyświetlanie dostępnych kolorów
-            czysc_ekran()
-            print(f"{CZARNY_BG}{CZERWONY}=== {ZIELONY}WYBÓR KOLORU {CZERWONY}==={RESET}")
-            print(f"{CZARNY_BG}{BIALY}Wybrany symbol: {symbole[wybor_symbolu][1]}{RESET}\n")
-            
-            print(f"{CZARNY_BG}{BIALY}Dostępne kolory:{RESET}")
-            for klucz, (nazwa, kod_koloru) in kolory.items():
-                print(f"{CZARNY_BG}{klucz}. {kod_koloru}{nazwa}{RESET}")
-                
-            wybor_koloru = input(f"\n{CZARNY_BG}{BIALY}Wybierz numer koloru: {RESET}").strip()
-            
-            if wybor_koloru not in kolory:
-                print(f"{CZARNY_BG}{CZERWONY}Nieprawidłowy wybór! Spróbuj ponownie.{RESET}")
-                input("Naciśnij Enter, aby kontynuować...")
-                continue
-            
-            # Zapisanie wyboru gracza (nazwa, sformatowany znak z kolorem do wyświetlania)
-            nazwa_skina = symbole[wybor_symbolu][0]
-            znak_skina = symbole[wybor_symbolu][1]
-            kolor_kod = kolory[wybor_color := wybor_koloru][1]
-            
-            sformatowany_skin = f"{kolor_kod}{znak_skina}{RESET}"
-            
-            wybory_graczy[gracz] = {
-                "nazwa": nazwa_skina,
-                "znak": znak_skina,
-                "render": sformatowany_skin
-            }
-            break
-
-    # Podsumowanie wyborów
-    czysc_ekran()
-    print(f"{CZARNY_BG}{ZIELONY}=== KONFIGURACJA ZAKOŃCZONA ==={RESET}\n")
-    print(f"{CZARNY_BG}Gracz 1 gra jako: {wybory_graczy['Gracz 1']['render']}")
-    print(f"{CZARNY_BG}Gracz 2 gra jako: {wybory_graczy['Gracz 2']['render']}{RESET}\n")
+def run_skins_menu(screen):
+    global aktualny_skin
+    clock = pygame.time.Clock()
     
-    return wybory_graczy
+    czcionka_tytulu = pygame.font.SysFont("Arial", 38, bold=True)
+    czcionka_skinow = pygame.font.SysFont("Arial", 20, bold=True)
+    czcionka_powrotu = pygame.font.SysFont("Arial", 24, bold=True)
 
-# Uruchomienie funkcji, aby przetestować działanie
-if __name__ == "__main__":
-    skiny = menu_wyboru_skinow()
+    nazwy_skinow = [
+        "1", "2", "3", "4", "5",
+        "6", "7", "8", "9", "10"
+    ]
+
+    SZEROKOSC_BOXA = 130
+    WYSOKOSC_BOXA = 65
+    ODSTEP_X = 15
+    ODSTEP_Y = 35
+    START_X = (ustawienia.OKNO_SZEROKOSC - (5 * SZEROKOSC_BOXA + 4 * ODSTEP_X)) // 2
+    START_Y = 220
+
+    przyciski_skinow = []
+    for i, nazwa in enumerate(nazwy_skinow):
+        kolumna = i % 5
+        wiersz = i // 5
+        x = START_X + kolumna * (SZEROKOSC_BOXA + ODSTEP_X)
+        y = START_Y + wiersz * (WYSOKOSC_BOXA + ODSTEP_Y)
+        przyciski_skinow.append({"rect": pygame.Rect(x, y, SZEROKOSC_BOXA, WYSOKOSC_BOXA), "nazwa": nazwa})
+
+    przycisk_powrot = pygame.Rect(300, 480, 200, 50)
+
+    while True:
+        pozycja_myszki = pygame.mouse.get_pos()
+        screen.fill(ustawienia.CZERN_TLA)
+
+        tekst_tytulu = czcionka_tytulu.render("Wybór skinów", True, ustawienia.BIEL)
+        X_tytulu = (ustawienia.OKNO_SZEROKOSC // 2) - (tekst_tytulu.get_width() // 2)
+        screen.blit(tekst_tytulu, (X_tytulu, 100))
+
+        for p in przyciski_skinow:
+            if p["nazwa"] == aktualny_skin:
+                kolor_ramki = ustawienia.ZIELEN
+                pygame.draw.rect(screen, kolor_ramki, p["rect"])
+                kolor_tekstu = ustawienia.CZERN_TLA
+            else:
+                kolor_ramki = (0, 255, 0) if p["rect"].collidepoint(pozycja_myszki) else (0, 120, 50)
+                pygame.draw.rect(screen, kolor_ramki, p["rect"], ustawienia.GRUBOŚĆ_RAMKI)
+                kolor_tekstu = ustawienia.BIEL
+
+            napis = czcionka_skinow.render(p["nazwa"], True, kolor_tekstu)
+            X_tekstu = p["rect"].x + (p["rect"].width // 2) - (napis.get_width() // 2)
+            Y_tekstu = p["rect"].y + (p["rect"].height // 2) - (napis.get_height() // 2)
+            screen.blit(napis, (X_tekstu, Y_tekstu))
+
+        kolor_powrotu = (150, 150, 150) if przycisk_powrot.collidepoint(pozycja_myszki) else (100, 100, 100)
+        pygame.draw.rect(screen, kolor_powrotu, przycisk_powrot, ustawienia.GRUBOŚĆ_RAMKI)
+        napis_powrot = czcionka_powrotu.render("Powrót", True, kolor_powrotu)
+        screen.blit(napis_powrot, (przycisk_powrot.x + (przycisk_powrot.width // 2) - (napis_powrot.get_width() // 2),
+                                    przycisk_powrot.y + (przycisk_powrot.height // 2) - (napis_powrot.get_height() // 2)))
+
+        for zdarzenie in pygame.event.get():
+            if zdarzenie.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+                
+            if zdarzenie.type == pygame.MOUSEBUTTONDOWN and zdarzenie.button == 1:
+                for p in przyciski_skinow:
+                    if p["rect"].collidepoint(pozycja_myszki):
+                        aktualny_skin = p["nazwa"]
+                        print(f"Zmieniono skin na: {aktualny_skin}")
+                
+                if przycisk_powrot.collidepoint(pozycja_myszki):
+                    return {"action": "BACK", "skin": aktualny_skin}
+
+        pygame.display.flip()
+        clock.tick(60)
