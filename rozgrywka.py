@@ -1,6 +1,7 @@
 import pygame
 import sys
 import ustawienia
+import random  #Tymczasowo używane do prostego ruchu bota
 
 #Algorytm sprawdzajacy wygrana
 def check_winner(board, size, win_length):
@@ -40,8 +41,16 @@ def is_board_full(board):
     return True
 
 
-
-
+def temporary_mock_bot(board, size):
+    #Tymczasowa logika bota
+    empty_cells = []
+    for r in range(size):
+        for c in range(size):
+            if board[r][c] is None:
+                empty_cells.append((r, c))
+    if empty_cells:
+        return random.choice(empty_cells)
+    return None
 
 
 def run_game_loop(screen, size, difficulty="Łatwy"):
@@ -80,3 +89,53 @@ def run_game_loop(screen, size, difficulty="Łatwy"):
     o_image = pygame.transform.smoothscale(o_image_raw, (target_img_size, target_img_size))
 
     #GŁÓWNA PĘTLA MECZU
+    while True:
+        screen.fill(ustawienia.CZERN_TLA)
+        mouse_pos = pygame.mouse.get_pos()
+
+        #Rysowanie tekstów interfejsu
+        title_text = f"Plansza {size}x{size} (Wymagane do wygranej: {win_length})"
+        title_surf = font_ui.render(title_text, True, ustawienia.BIEL)
+        screen.blit(title_surf, (ustawienia.OKNO_SZEROKOSC // 2 - title_surf.get_width() // 2, 20))
+
+        if not game_over:
+            status_text = "Twój ruch (X)" if current_player == "X" else "Ruch komputera (O)..."
+            status_color = ustawienia.ZIELEN if current_player == "X" else list(ustawienia.SZARY_TEKST)
+            status_surf = font_ui.render(status_text, True, status_color)
+            screen.blit(status_surf, (ustawienia.OKNO_SZEROKOSC // 2 - status_surf.get_width() // 2, 70))
+        else:
+            if winner:
+                end_text = "WYGRAŁEŚ!" if winner == "X" else "PRZEGRAŁEŚ! Komputer wygrał."
+                end_color = ustawienia.ZIELEN if winner == "X" else ustawienia.CZERWIEN
+            else:
+                end_text = "REMIS!"
+                end_color = ustawienia.SZARY_TEKST
+            
+            end_surf = font_ui.render(end_text, True, end_color)
+            screen.blit(end_surf, (ustawienia.OKNO_SZEROKOSC // 2 - end_surf.get_width() // 2, 65))
+            
+            #Rysowanie przycisku "Powrót"
+            kolor_powrotu = ustawienia.daj_kolor_przycisku(btn_back, mouse_pos)
+            pygame.draw.rect(screen, kolor_powrotu, btn_back, ustawienia.GRUBOŚĆ_RAMKI)
+            back_surf = font_ui.render("Powrót do menu", True, kolor_powrotu)
+            screen.blit(back_surf, (btn_back.centerx - back_surf.get_width() // 2, btn_back.centery - back_surf.get_height() // 2))
+
+        #Rysowanie siatki planszy gry
+        for i in range(1, size):
+            pygame.draw.line(screen, ustawienia.ZIELEN, (START_X + i * CELL_SIZE, START_Y), (START_X + i * CELL_SIZE, START_Y + BOARD_DISPLAY_SIZE), 3)
+            pygame.draw.line(screen, ustawienia.ZIELEN, (START_X, START_Y + i * CELL_SIZE), (START_X + BOARD_DISPLAY_SIZE, START_Y + i * CELL_SIZE), 3)
+        
+        # Ramka zewnętrzna wokół planszy
+        pygame.draw.rect(screen, ustawienia.ZIELEN, (START_X, START_Y, BOARD_DISPLAY_SIZE, BOARD_DISPLAY_SIZE), 4)
+
+        #Rysowanie skinów
+        for r in range(size):
+            for c in range(size):
+                if board[r][c] is not None:
+                    # Wybór odpowiedniego obrazka zależnie od zawartości komórki
+                    img_to_draw = x_image if board[r][c] == "X" else o_image
+                    
+                    # Środkowanie obrazka wewnątrz komórki siatki
+                    sym_x = START_X + c * CELL_SIZE + (CELL_SIZE // 2) - (img_to_draw.get_width() // 2)
+                    sym_y = START_Y + r * CELL_SIZE + (CELL_SIZE // 2) - (img_to_draw.get_height() // 2)
+                    screen.blit(img_to_draw, (sym_x, sym_y))
