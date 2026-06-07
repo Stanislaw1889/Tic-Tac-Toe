@@ -1,24 +1,48 @@
+import math
 # Algorytm Minimax
-def minimax(b, depth, is_maximizing)
-    if check_winner(b, 'O') return 10 - depth  # Bot ('O') preferuje szybszą wygraną
-    if check_winner(b, 'X') return depth - 10  # Gracz ('X')
-    if is_board_full(b) return 0
+def minimax(b, depth, is_maximizing):
+    #if check_winner(b, 'O'): return 10 - depth  # Bot ('O') preferuje szybszą wygraną
+    #if check_winner(b, 'X'): return depth - 10  # Gracz ('X')
+    #if is_board_full(b): return 0
 
-    if is_maximizing
+    if is_maximizing:
         best_score = -math.inf
-        for i in range(9)
-            if b[i] == ' '
+        for i in range(9):
+            if b[i] == ' ':
                 b[i] = 'O'
                 score = minimax(b, depth + 1, False)
                 b[i] = ' '
                 best_score = max(score, best_score)
         return best_score
-    else
+    else:
         best_score = math.inf
-        for i in range(9)
-            if b[i] == ' '
+        for i in range(9):
+            if b[i] == ' ':
                 b[i] = 'X'
                 score = minimax(b, depth + 1, True)
                 b[i] = ' '
                 best_score = min(score, best_score)
         return best_score
+
+
+def find_best_move(b):
+    best_score = -math.inf
+    best_move = -1
+
+    # Przeglądamy wszystkie pola na planszy
+    for i in range(9):
+        if b[i] == ' ':
+            # Symulujemy ruch bota
+            b[i] = 'O'
+            # Wywołujemy minimax zaczynając od głębokości 0
+            # i dajemy False, bo kolejny ruch będzie wykonywał gracz
+            score = minimax(b, 0, False)
+            # Cofamy ruch
+            b[i] = ' '
+
+            # Jeśli ten ruch jest lepszy niż dotychczasowy najlepszy, zapisujemy go
+            if score > best_score:
+                best_score = score
+                best_move = i
+
+    return best_move
