@@ -139,3 +139,56 @@ def run_game_loop(screen, size, difficulty="Łatwy"):
                     sym_x = START_X + c * CELL_SIZE + (CELL_SIZE // 2) - (img_to_draw.get_width() // 2)
                     sym_y = START_Y + r * CELL_SIZE + (CELL_SIZE // 2) - (img_to_draw.get_height() // 2)
                     screen.blit(img_to_draw, (sym_x, sym_y))
+
+        #Logika ruchu bota
+        if not game_over and current_player == "O":
+            pygame.time.wait(400)  #Krótkie opóźnienie (0.4s), aby ruch komputera wyglądał naturalnie
+            
+            #Tu wpięta będzie właściwa funkcja bota
+            #Na ten moment używamy tymczasowego losowego bota:
+
+            bot_move = temporary_mock_bot(board, size)
+            
+            if bot_move:
+                r_bota, c_bota = bot_move
+                board[r_bota][c_bota] = "O"
+                
+                #Sprawdzenie stanów końca gry po ruchu bota
+                winner = check_winner(board, size, win_length)
+                if winner or is_board_full(board):
+                    game_over = True
+                else:
+                    current_player = "X"  #Powrót do tury gracza ludzkiego
+
+        #Obsługa myszy i okna
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                #Jeśli mecz się zakończył i kliknięto przycisk powrotu
+                if game_over and btn_back.collidepoint(mouse_pos):
+                    return  #Wyjście z pętli gry (powrót do głównego menu)
+
+                #Obsługa ruchu gracza
+                if not game_over and current_player == "X":
+                    x_click, y_click = mouse_pos
+                    #Sprawdzenie czy kliknięcie nastąpiło wewnątrz siatki gry
+                    if START_X <= x_click < START_X + BOARD_DISPLAY_SIZE and START_Y <= y_click < START_Y + BOARD_DISPLAY_SIZE:
+                        c = (x_click - START_X) // CELL_SIZE
+                        r = (y_click - START_Y) // CELL_SIZE
+
+                        #Jeśli wybrane pole jest puste, wykonaj ruch
+                        if board[r][c] is None:
+                            board[r][c] = "X"
+                            
+                            #Sprawdzenie stanów końca gry po ruchu gracza
+                            winner = check_winner(board, size, win_length)
+                            if winner or is_board_full(board):
+                                game_over = True
+                            else:
+                                current_player = "O"  #Przekazanie tury komputerowi
+
+        pygame.display.flip()
+        clock.tick(60)
