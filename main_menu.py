@@ -4,6 +4,7 @@ import os
 import ustawienia
 import menu_gry
 import skiny
+import rozgrywka
 
 pygame.init()
 
@@ -43,6 +44,7 @@ def main_menu():
                             wynik = menu_gry.run_game_setup_menu(ekran, is_singleplayer=True)
                             if wynik["action"] == "START":
                                 print(f"Przekazuję do silnika gry tryb BOT. Dane: {wynik}")
+                                rozgrywka.run_game_loop(ekran, size=wynik["size"], difficulty=wynik["difficulty"])
 
                         elif p["tekst"] == "Gra wieloosobowa":
                             wynik = menu_gry.run_game_setup_menu(ekran, is_singleplayer=False)
