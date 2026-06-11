@@ -20,4 +20,6 @@ def daj_kolor_przycisku(przycisk_rect, pozycja_myszki):
         return CZERWIEN
     else:
         return ZIELEN
+
 #Funkcja sprawdza czy kursor jest na przycisku, jeśli tak to czerwony, nie to zielony
+
