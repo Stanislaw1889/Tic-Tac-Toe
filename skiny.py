@@ -77,7 +77,7 @@ def run_skins_menu(screen):
                         if aktualny_skin == "Standard":
                                 ustawienia.AKTUALNY_SKIN_X = "x_skin.png"
                                 ustawienia.AKTUALNY_SKIN_O = "o_skin.png"
-                         elif aktualny_skin == "kolko_i_krzyzyk":
+                        elif aktualny_skin == "kolko_i_krzyzyk":
                                 ustawienia.AKTUALNY_SKIN_X = "cross.png"   
                                 ustawienia.AKTUALNY_SKIN_O = "circle.png"  
                 
