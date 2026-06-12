@@ -20,6 +20,13 @@ def daj_kolor_przycisku(przycisk_rect, pozycja_myszki):
         return CZERWIEN
     else:
         return ZIELEN
+      
 
 #Funkcja sprawdza czy kursor jest na przycisku, jeśli tak to czerwony, nie to zielony
 
+# Wgrywanie i skalowanie plików z grafikami
+    target_img_size = int(CELL_SIZE * 0.8)
+    
+    # Ładowanie grafik z obsługą przezroczystości (.convert_alpha())
+    x_image_raw = pygame.image.load("x_skin.png").convert_alpha()
+    o_image_raw = pygame.image.load("o_skin.png").convert_alpha()
