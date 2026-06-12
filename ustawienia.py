@@ -20,4 +20,3 @@ def daj_kolor_przycisku(przycisk_rect, pozycja_myszki):
         return CZERWIEN
     else:
         return ZIELEN
-
