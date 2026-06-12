@@ -1,0 +1,12 @@
+# DOKUMENT TEN BĘDZIE ZAWIERAŁ TEKST ZE SPRAWOZDANIEM KTÓRE TWORZE W WORDZIE, ALE CZYTAŁEM ŻE GITHUB
+# W DOKUMENTACH .docx NIE WYCZYTUJE ZMIAN, A CHCIAŁEM ŻEBY BYŁO WIDAĆ RÓWNIEŻ POSTĘPY PRACY SPRAWOZDANIA
+# (ŻEBY SZANOWNY PROWADZĄCY NIE MYŚLAŁ ŻE NIC NIE ROBIŁEM PRZEZ TE KILKA DNI :) )
+
+Grupowa część sprawozdania
+Zespół zrealizował projekt za pomocą metodyki Scruma, która idealnie wpisuje się w specyfikację narzędzi pracy grupowej. Pracę podzielono na krótkie, jednotygodniowe Sprinty. Na początku każdego Sprintu organizowane było planowanie celów, a na koniec dokonywano przeglądu oraz retrospekcji. Rola Scrum Mastera była rotacyjna, co pozwoliło większej ilości członków zespołu poczuć się w tej roli i zarządzać procesem. Aby cały czas pchać projekt do przodu i poprawić efektywność zespołu, Scrum Master również był Developerem, co poskutkowało tym, że zdołaliśmy dopiąć znaczną część projektu do końca w wyznaczonym czasie.
+
+Narzędzia, które używaliśmy:
+•	GitHub – Nasze repozytorium i główne narzędzie integracji. Każdą nową funkcjonalność staraliśmy się zapisywać w nowym branchu, a po wykonaniu zadania powinniśmy scalać to z głównym branchem (chociaż nie zawsze o tym pamiętaliśmy, ale nie utrudniło nam to zbytnio pracy) 
+•	Do wizualizacji zadań i postępów ostatecznie użyliśmy tablic w programie Trello. Na początku tworzyliśmy zwykłe zadania na GitHubie, ale chcieliśmy mieć tablice Kanban, których z niewiadomych powodów nie udało nam się wykonać w tym programie, dlatego przerzuciliśmy się później na Trello, w którym mieliśmy tablicę podzieloną na kolumny: Do zrobienia,  W trakcie,  Zakończone
+•	Do komunikacji używaliśmy dwóch programów: codzienne standupy zapisywaliśmy w pliku wordowskim, aby mieć wszystkie w jednym miejscu, żeby pokazać je w sprawozdaniu; Messengera używaliśmy do prostszej komunikacji, ustalaliśmy tam godzinę spotkań, pisaliśmy o najważniejszych sprawach.
+
