@@ -53,7 +53,7 @@ def temporary_mock_bot(board, size):
     return None
 
 
-def run_game_loop(screen, size, difficulty="Łatwy"):
+def run_game_loop(screen, size, difficulty="Łatwy",is_timed=False):
     clock = pygame.time.Clock()
     
     # Warunek wygranej: dla plansz 3x3 oraz 4x4 szukamy 3 znaków. Dla 5x5 szukamy 4 znaków.
@@ -77,6 +77,10 @@ def run_game_loop(screen, size, difficulty="Łatwy"):
     current_player = "X"  # Gracz ludzki to zawsze "X", komputer to "O"
     winner = None
     game_over = False
+
+    #Zmienne obsługujące licznik czasu
+    turn_start_time = None
+    LIMIT_CZASU = 5.0  #limit w sekundach
 
     # Parametry rysowania siatki
     BOARD_DISPLAY_SIZE = 400
@@ -110,12 +114,35 @@ def run_game_loop(screen, size, difficulty="Łatwy"):
         # =========================================================================
         # KROK 2: Dynamiczne rysowanie przycisków w zależności od stanu gry
         # =========================================================================
+        #logika timera
+        time_left = LIMIT_CZASU
+        if not game_over and is_timed and current_player == "X":
+            if turn_start_time is None:
+                turn_start_time = pygame.time.get_ticks()
+            
+            # Obliczanie upływu czasu w sekundach
+            elapsed = (pygame.time.get_ticks() - turn_start_time) / 1000.0
+            time_left = LIMIT_CZASU - elapsed
+            
+            if time_left <= 0:
+                time_left = 0
+                game_over = True
+                winner = "O"  # Gracz przekroczył czas -> Komputer wygrywa automatycznie
+
         if not game_over:
             status_text = "Twój ruch (X)" if current_player == "X" else "Ruch komputera (O)..."
             status_color = ustawienia.ZIELEN if current_player == "X" else list(ustawienia.SZARY_TEKST)
             status_surf = font_ui.render(status_text, True, status_color)
             screen.blit(status_surf, (ustawienia.OKNO_SZEROKOSC // 2 - status_surf.get_width() // 2, 70))
-            
+
+            # Wyświetlanie zegara odliczającego czas
+            if is_timed and current_player == "X":
+                timer_text = f"Czas: {time_left:.1f}s"
+                # Zegar zmienia kolor na czerwony, gdy zostanie mniej niż 2 sekundy
+                timer_color = ustawienia.CZERWIEN if time_left < 2.0 else (240, 200, 40)
+                timer_surf = font_timer.render(timer_text, True, timer_color)
+                screen.blit(timer_surf, (ustawienia.OKNO_SZEROKOSC // 2 - timer_surf.get_width() // 2, 100))
+                
             # Rysowanie wyśrodkowanego przycisku "Cofnij ruch" w trakcie gry
             kolor_undo = ustawienia.daj_kolor_przycisku(btn_undo_centered, mouse_pos)
             pygame.draw.rect(screen, kolor_undo, btn_undo_centered, ustawienia.GRUBOŚĆ_RAMKI)
