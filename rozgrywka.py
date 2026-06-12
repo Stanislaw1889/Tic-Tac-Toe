@@ -53,7 +53,7 @@ def temporary_mock_bot(board, size):
     return None
 
 
-def run_game_loop(screen, size, difficulty="Łatwy",is_timed=False):
+def run_game_loop(screen, size, difficulty="Łatwy", is_timed=False):
     clock = pygame.time.Clock()
     
     # Warunek wygranej: dla plansz 3x3 oraz 4x4 szukamy 3 znaków. Dla 5x5 szukamy 4 znaków.
@@ -78,9 +78,9 @@ def run_game_loop(screen, size, difficulty="Łatwy",is_timed=False):
     winner = None
     game_over = False
 
-    #Zmienne obsługujące licznik czasu
+    # Zmienne obsługujące licznik czasu
     turn_start_time = None
-    LIMIT_CZASU = 5.0  #limit w sekundach
+    LIMIT_CZASU = 5.0  # limit w sekundach
 
     # Parametry rysowania siatki
     BOARD_DISPLAY_SIZE = 400
@@ -89,11 +89,12 @@ def run_game_loop(screen, size, difficulty="Łatwy",is_timed=False):
     CELL_SIZE = BOARD_DISPLAY_SIZE // size
 
     font_ui = pygame.font.SysFont("Arial", 28, bold=True)
+    font_timer = pygame.font.SysFont("Arial", 24, bold=True) # Dodana brakująca czcionka timera
     
     # Wgrywanie i skalowanie plików z grafikami
     target_img_size = int(CELL_SIZE * 0.8)
     
-    # Ładowanie grafik z obsługą przezroczystości (.convert_alpha())
+    # ZMIANA: Dynamiczne ładowanie grafik z pliku ustawienia.py
     x_image_raw = pygame.image.load(ustawienia.AKTUALNY_SKIN_X).convert_alpha()
     o_image_raw = pygame.image.load(ustawienia.AKTUALNY_SKIN_O).convert_alpha()
     
@@ -114,7 +115,7 @@ def run_game_loop(screen, size, difficulty="Łatwy",is_timed=False):
         # =========================================================================
         # KROK 2: Dynamiczne rysowanie przycisków w zależności od stanu gry
         # =========================================================================
-        #logika timera
+        # logika timera
         time_left = LIMIT_CZASU
         if not game_over and is_timed and current_player == "X":
             if turn_start_time is None:
@@ -208,6 +209,7 @@ def run_game_loop(screen, size, difficulty="Łatwy",is_timed=False):
                     game_over = True
                 else:
                     current_player = "X"
+                    turn_start_time = None  # Reset czasu dla gracza przed jego ruchem
 
         # Obsługa myszy i okna
         for event in pygame.event.get():
@@ -240,6 +242,7 @@ def run_game_loop(screen, size, difficulty="Łatwy",is_timed=False):
                         game_over = False
                         winner = None
                         current_player = "X"
+                        turn_start_time = None  # Reset timera po cofnięciu ruchu
                         continue
 
                 # Obsługa normalnego ruchu gracza
