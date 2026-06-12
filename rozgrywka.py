@@ -94,8 +94,8 @@ def run_game_loop(screen, size, difficulty="Łatwy",is_timed=False):
     target_img_size = int(CELL_SIZE * 0.8)
     
     # Ładowanie grafik z obsługą przezroczystości (.convert_alpha())
-    x_image_raw = pygame.image.load("x_skin.png").convert_alpha()
-    o_image_raw = pygame.image.load("o_skin.png").convert_alpha()
+    x_image_raw = pygame.image.load(ustawienia.AKTUALNY_SKIN_X).convert_alpha()
+    o_image_raw = pygame.image.load(ustawienia.AKTUALNY_SKIN_O).convert_alpha()
     
     # Skalowanie obrazków do rozmiaru dopasowanego do wybranej planszy (3x3, 4x4 lub 5x5)
     x_image = pygame.transform.smoothscale(x_image_raw, (target_img_size, target_img_size))
