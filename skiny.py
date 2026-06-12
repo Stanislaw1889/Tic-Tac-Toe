@@ -13,7 +13,7 @@ def run_skins_menu(screen):
     czcionka_powrotu = pygame.font.SysFont("Arial", 24, bold=True)
 
     nazwy_skinow = [
-        "Standard", "Geometria", "3", "4", "5",
+        "Standard", "kolko_i_krzyzyk", "3", "4", "5",
         "6", "7", "8", "9", "10"
     ]
 
@@ -77,7 +77,7 @@ def run_skins_menu(screen):
                         if aktualny_skin == "Standard":
                                 ustawienia.AKTUALNY_SKIN_X = "x_skin.png"
                                 ustawienia.AKTUALNY_SKIN_O = "o_skin.png"
-                         elif aktualny_skin == "Geometria":
+                         elif aktualny_skin == "kolko_i_krzyzyk":
                                 ustawienia.AKTUALNY_SKIN_X = "cross.png"   
                                 ustawienia.AKTUALNY_SKIN_O = "circle.png"  
                 
