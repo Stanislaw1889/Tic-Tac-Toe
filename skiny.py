@@ -13,7 +13,7 @@ def run_skins_menu(screen):
     czcionka_powrotu = pygame.font.SysFont("Arial", 24, bold=True)
 
     nazwy_skinow = [
-        "1", "2", "3", "4", "5",
+        "Standard", "Geometria", "3", "4", "5",
         "6", "7", "8", "9", "10"
     ]
 
@@ -73,6 +73,13 @@ def run_skins_menu(screen):
                     if p["rect"].collidepoint(pozycja_myszki):
                         aktualny_skin = p["nazwa"]
                         print(f"Zmieniono skin na: {aktualny_skin}")
+
+                        if aktualny_skin == "Standard":
+                                ustawienia.AKTUALNY_SKIN_X = "x_skin.png"
+                                ustawienia.AKTUALNY_SKIN_O = "o_skin.png"
+                         elif aktualny_skin == "Geometria":
+                                ustawienia.AKTUALNY_SKIN_X = "cross.png"   
+                                ustawienia.AKTUALNY_SKIN_O = "circle.png"  
                 
                 if przycisk_powrot.collidepoint(pozycja_myszki):
                     return {"action": "BACK", "skin": aktualny_skin}
