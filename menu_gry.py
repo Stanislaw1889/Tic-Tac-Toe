@@ -24,15 +24,17 @@ def run_game_setup_menu(screen, is_singleplayer=True):
     
     selected_size = 3
     selected_difficulty = "Łatwy"
+    selected_timed = False
 
 
-    btn_3x3 = Button("Plansza 3x3", 250, 180, 300, 45, ustawienia.ZIELEN)
-    btn_4x4 = Button("Plansza 4x4", 250, 240, 300, 45, ustawienia.ZIELEN)
-    btn_5x5 = Button("Plansza 5x5", 250, 300, 300, 45, ustawienia.ZIELEN)
+    btn_3x3 = Button("Plansza 3x3", 250, 140, 300, 45, ustawienia.ZIELEN)
+    btn_4x4 = Button("Plansza 4x4", 250, 200, 300, 45, ustawienia.ZIELEN)
+    btn_5x5 = Button("Plansza 5x5", 250, 360, 300, 45, ustawienia.ZIELEN)
     
-    btn_diff = Button(f"Poziom: {selected_difficulty}", 250, 380, 300, 45, ustawienia.SZARY_TEKST)
-    btn_start = Button("URUCHOM GRĘ", 250, 460, 300, 50, ustawienia.CZERWIEN)
-    btn_back = Button("Powrót", 250, 530, 300, 45, ustawienia.SZARY_TEKST)
+    btn_diff = Button(f"Poziom: {selected_difficulty}", 250, 320, 300, 45, ustawienia.SZARY_TEKST)
+    btn_mode = Button("Tryb: Klasyczny", 250, 380, 300, 45, ustawienia.ZIELEN)
+    btn_start = Button("URUCHOM GRĘ", 250, 460, 300, 45, ustawienia.CZERWIEN)
+    btn_back = Button("Powrót", 250, 520, 300, 45, ustawienia.SZARY_TEKST)
 
     in_menu = True
     while in_menu:
@@ -75,12 +77,24 @@ def run_game_setup_menu(screen, is_singleplayer=True):
                     elif selected_difficulty == "Średni": selected_difficulty = "Trudny"
                     else: selected_difficulty = "Łatwy"
                     btn_diff.text = f"Poziom: {selected_difficulty}"
+
+                elif btn_mode.is_clicked(mouse_pos):
+                    selected_timed = not selected_timed
+                    btn_mode.text = "Tryb: Na czas (5s)" if selected_timed else "Tryb: Klasyczny"
                     
                 elif btn_start.is_clicked(mouse_pos):
                     return {"size": selected_size, "difficulty": selected_difficulty, "action": "START"}
                     
                 elif btn_back.is_clicked(mouse_pos):
                     return {"action": "BACK"}
+
+                elif btn_start.is_clicked(mouse_pos):
+                    return {
+                        "size": selected_size, 
+                        "difficulty": selected_difficulty, 
+                        "timed": selected_timed, 
+                        "action": "START"
+                    }
 
         pygame.display.flip()
         clock.tick(60)
