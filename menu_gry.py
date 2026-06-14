@@ -29,7 +29,7 @@ def run_game_setup_menu(screen, is_singleplayer=True):
 
     btn_3x3 = Button("Plansza 3x3", 250, 140, 300, 45, ustawienia.ZIELEN)
     btn_4x4 = Button("Plansza 4x4", 250, 200, 300, 45, ustawienia.ZIELEN)
-    btn_5x5 = Button("Plansza 5x5", 250, 360, 300, 45, ustawienia.ZIELEN)
+    btn_5x5 = Button("Plansza 5x5", 250, 260, 300, 45, ustawienia.ZIELEN) #Poprawilem miejsce przycisku
     
     btn_diff = Button(f"Poziom: {selected_difficulty}", 250, 320, 300, 45, ustawienia.SZARY_TEKST)
     btn_mode = Button("Tryb: Klasyczny", 250, 380, 300, 45, ustawienia.ZIELEN)
@@ -56,6 +56,8 @@ def run_game_setup_menu(screen, is_singleplayer=True):
         btn_5x5.draw(screen)
         if is_singleplayer:
             btn_diff.draw(screen)
+       
+        btn_mode.draw(screen) #Zniknal przycisk do wyboru trybu gry
         btn_start.draw(screen)
         btn_back.draw(screen)
 
@@ -81,9 +83,10 @@ def run_game_setup_menu(screen, is_singleplayer=True):
                 elif btn_mode.is_clicked(mouse_pos):
                     selected_timed = not selected_timed
                     btn_mode.text = "Tryb: Na czas (5s)" if selected_timed else "Tryb: Klasyczny"
-                    
-                elif btn_start.is_clicked(mouse_pos):
-                    return {"size": selected_size, "difficulty": selected_difficulty, "action": "START"}
+
+                #Usuwam ten blok bo mozliwe ze jest niepotrzebny    
+                #elif btn_start.is_clicked(mouse_pos):
+                    #return {"size": selected_size, "difficulty": selected_difficulty, "action": "START"}
                     
                 elif btn_back.is_clicked(mouse_pos):
                     return {"action": "BACK"}

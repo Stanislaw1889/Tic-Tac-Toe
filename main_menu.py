@@ -53,7 +53,7 @@ def main_menu():
                             wynik = menu_gry.run_game_setup_menu(ekran, is_singleplayer=True)
                             if wynik["action"] == "START":
                                 print(f"Przekazuję do silnika gry tryb BOT. Dane: {wynik}")
-                                rozgrywka.run_game_loop(ekran, size=wynik["size"], difficulty=wynik["difficulty"])
+                                rozgrywka.run_game_loop(ekran, size=wynik["size"], difficulty=wynik["difficulty"], is_timed=wynik.get("timed", False))
 
                         elif p["tekst"] == "Gra wieloosobowa":
                             wynik = menu_gry.run_game_setup_menu(ekran, is_singleplayer=False)
