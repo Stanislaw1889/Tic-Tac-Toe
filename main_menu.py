@@ -5,6 +5,7 @@ import ustawienia
 import menu_gry
 import skiny
 import rozgrywka
+import menu_statystyk
 
 pygame.init()
 
@@ -63,6 +64,9 @@ def main_menu():
                         elif p["tekst"] == "Wybór skinów":
                             wynik_skinow = skiny.run_skins_menu(ekran)
                             print(f"Powrót do menu. Aktywny skin w systemie: {wynik_skinow['skin']}")
+
+                        elif p["tekst"] == "Statystyki":
+                            menu_statystyk.run_stats_menu(ekran)
     
         ekran.fill(ustawienia.CZERN_TLA)
 

@@ -104,10 +104,26 @@ def run_game_loop(screen, size, difficulty="Łatwy", is_timed=False):
     x_image = pygame.transform.smoothscale(x_image_raw, (target_img_size, target_img_size))
     o_image = pygame.transform.smoothscale(o_image_raw, (target_img_size, target_img_size))
 
+    wynik_zapisany = False
+
     # GŁÓWNA PĘTLA MECZU
     while True:
         screen.fill(ustawienia.CZERN_TLA)
         mouse_pos = pygame.mouse.get_pos()
+
+        #Zapips do statystyk
+        if game_over and not wynik_zapisany:
+            import ranking1
+            
+            if winner == "X":
+                rezultat = "wygrane"
+            elif winner == "O":
+                rezultat = "przegrane"
+            else:
+                rezultat = "remisy"
+
+            ranking1.dodaj_wynik(difficulty, rezultat)
+            wynik_zapisany = True
 
         # Rysowanie tekstów interfejsu
         title_text = f"Plansza {size}x{size} (Wymagane do wygranej: {win_length})"

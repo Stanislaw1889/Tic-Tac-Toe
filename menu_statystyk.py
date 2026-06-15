@@ -1,7 +1,7 @@
 import pygame
 import sys
 import ustawienia
-import statystyki_baza
+import ranking1
 
 
 def run_stats_menu(screen):
@@ -30,7 +30,7 @@ def run_stats_menu(screen):
         screen.blit(tytul_surf, (ustawienia.OKNO_SZEROKOSC // 2 - tytul_surf.get_width() // 2, 45))
 
         # Pobieramy świeże statystyki z pliku JSON
-        ranking = statystyki_baza.wczytaj_ranking()
+        ranking = ranking1.wczytaj_ranking()
 
         # Rysowanie 3 zakładek poziomów trudności
         for poziom, rect in zakladki.items():
