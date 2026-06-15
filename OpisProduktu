@@ -1,3 +1,8 @@
-W aplikacji znajdziesz wyjątkowe funkcje stworzone z myślą o społeczności naszej uczelni. Możesz wybrać swoje barwy i zamiast klasycznych znaków grać trójkątem lub kwadratem. Dla ambitnych przygotowaliśmy Tryb Singleplayer gdzie zmierzysz się z algorytmem AI Local Multiplayer pozwoli Ci na szybką rozgrywkę ze znajomym na jednym telefonie.
-
-Od strony technicznej aplikacja jest stabilna ,a jej optymalizacja sprawia, że zużywa mniej energii niż podobne aplikacje dotychczas. Intuicyjny interfejs pozwala na ekspresowe zanurzenie się w rozgrywce. Nie wymaga połączenia z Wi-Fi, co pozwala grac gdzie chcesz, kiedy chcesz. Ćwicz logiczne myślenie i integruj się z znajomymi. Pobierz teraz i wejdź do gry.
+Nasz projekt to rozbudowana wersja klasycznego Kółka i Krzyżyka, którą napisaliśmy w Pythonie za pomocą biblioteki Pygame. 
+Żeby w kodzie panował porządek, podzieliliśmy go na kilka mniejszych części, osobny plik odpowiada za menu, inny za samą rozgrywkę, a jeszcze inny za statystyki.
+Gra oferuje sporo opcji, które urozmaicają ją. Przede wszystkim nie musimy grać tylko na standardowej planszy 3x3, możemy wybrać większe pola, czyli 4x4 oraz 5x5. W trybie 5x5 musimy jednak ułożyć 4 symbole obok siebie żeby wygrać. 
+Nasz bot ma trzy poziomy trudności: Łatwy (klika losowo), Średni (gra mądrze, ale czasem celowo popełnia błędy) oraz Trudny, z którym wygrana jest praktycznie niemożliwa. 
+Dodaliśmy również też tryb na czas, gdzie jest tylko 5 sekund na ruch, a jak się spóźnisz, to automatycznie przegrywasz.
+Zadbaliśmy również o wygląd i dodatki. Jeśli jesteś niezadowolony ze swojego ruchu, albo znalazłeś lepszy, można użyć przycisku „cofnij ruch”, który cofa nas do momentu w którym byliśmy przed ostatnim wyborem pola na planszy. Można go też użyć po zakończeniu gry, gdy komputer z nami wygrał. 
+Stworzyliśmy specjalne menu, w którym można wybrać jeden z 15 różnych zestawów skinów dla kółka i krzyżyka. 
+Gra pamięta też wszystkie nasze mecze i automatycznie zapisuje je w pliku tekstowym JSON, więc w każdej chwili można wejść w statystyki i sprawdzić swój procent wygranych.
