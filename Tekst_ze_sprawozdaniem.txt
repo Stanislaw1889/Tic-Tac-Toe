@@ -10,3 +10,4 @@ Narzędzia, które używaliśmy:
 •	Do wizualizacji zadań i postępów ostatecznie użyliśmy tablic w programie Trello. Na początku tworzyliśmy zwykłe zadania na GitHubie, ale chcieliśmy mieć tablice Kanban, których z niewiadomych powodów nie udało nam się wykonać w tym programie, dlatego przerzuciliśmy się później na Trello, w którym mieliśmy tablicę podzieloną na kolumny: Do zrobienia,  W trakcie,  Zakończone
 •	Do komunikacji używaliśmy dwóch programów: codzienne standupy zapisywaliśmy w pliku wordowskim, aby mieć wszystkie w jednym miejscu, żeby pokazać je w sprawozdaniu; Messengera używaliśmy do prostszej komunikacji, ustalaliśmy tam godzinę spotkań, pisaliśmy o najważniejszych sprawach.
 
+#Nie wrzucam do tego pliku już nic więcej, dziś po prostu dokończyłem całą resztę sprawozdania
