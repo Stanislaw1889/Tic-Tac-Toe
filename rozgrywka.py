@@ -2,6 +2,7 @@ import pygame
 import sys
 import ustawienia
 import random  # Tymczasowo używane do prostego ruchu bota
+import algorytm_bota #Dodano import nowego bota
 
 # Algorytm sprawdzajacy wygrana
 def check_winner(board, size, win_length):
@@ -40,7 +41,8 @@ def is_board_full(board):
             return False
     return True
 
-
+"""
+Dodaje tymczasowego bota w komentarz, moze sie przyda jesli beda bledy
 def temporary_mock_bot(board, size):
     # Tymczasowa logika bota
     empty_cells = []
@@ -51,7 +53,7 @@ def temporary_mock_bot(board, size):
     if empty_cells:
         return random.choice(empty_cells)
     return None
-
+"""
 
 def run_game_loop(screen, size, difficulty="Łatwy", is_timed=False):
     clock = pygame.time.Clock()
@@ -193,7 +195,7 @@ def run_game_loop(screen, size, difficulty="Łatwy", is_timed=False):
         # Logika ruchu bota
         if not game_over and current_player == "O":
             pygame.time.wait(400)  # Krótkie opóźnienie (0.4s)
-            bot_move = temporary_mock_bot(board, size)
+            bot_move = algorytm_bota.smart_bot_move(board, size, win_length, difficulty)
             
             if bot_move:
                 r_bota, c_bota = bot_move

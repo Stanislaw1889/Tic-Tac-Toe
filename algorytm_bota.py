@@ -1,6 +1,7 @@
 import math
 # Algorytm Minimax
 def minimax(board, size, win_length, depth, is_maximizing, max_depth):
+    from rozgrywka import check_winner, is_board_full #Dodanie importu
     winner = check_winner(board, size, win_length)
     if winner == "O":  # Komputer wygrywa
         return 10 - depth
