@@ -24,5 +24,5 @@ def daj_kolor_przycisku(przycisk_rect, pozycja_myszki):
 
 #Funkcja sprawdza czy kursor jest na przycisku, jeśli tak to czerwony, nie to zielony
 
-AKTUALNY_SKIN_X = "x_skin.png"
-AKTUALNY_SKIN_O = "o_skin.png"
+AKTUALNY_SKIN_X = "assets/skiny/cross_black.png"
+AKTUALNY_SKIN_O = "assets/skiny/circle_black.png"

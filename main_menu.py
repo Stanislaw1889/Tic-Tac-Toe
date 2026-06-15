@@ -7,6 +7,8 @@ import skiny
 import rozgrywka
 import menu_statystyk
 
+os.chdir(os.path.dirname(os.path.abspath(__file__))) #Dzieki temu program nie szuka grafik w folderze C:\Users\USER, tylko w dobrym
+
 pygame.init()
 
 ekran = pygame.display.set_mode((ustawienia.OKNO_SZEROKOSC, ustawienia.OKNO_WYSOKOSC))
